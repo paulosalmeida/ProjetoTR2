@@ -27,11 +27,13 @@ final class HttpRequest implements Runnable {
 	try {
 	    processRequest();
 	} catch (Exception e) {
+            System.out.println("Erro! HttpRequest");
 	    System.out.println(e);
 	}
     }
 
     private void processRequest() throws Exception {
+        String[] partes, partes2;
 	// Get a reference to the socket's input and output streams.
 	InputStream is = socket.getInputStream();
 	DataOutputStream os = new DataOutputStream(socket.getOutputStream());
@@ -46,11 +48,27 @@ final class HttpRequest implements Runnable {
         StringTokenizer tokens = new StringTokenizer(requestLine);
         tokens.nextToken();  // skip over the method, which should be "GET"
         String fileName = tokens.nextToken();
+        String camposGET, campo, username;
 	
         // Prepend a "." so that file request is within the current directory.
         fileName = "." + fileName ;
-        //fileName = "F:/Teste.html";
         System.out.println(fileName);
+        
+        if(fileName.contains(Character.toString('?'))){
+            partes = fileName.split("\\?");
+            fileName = partes[0];
+            camposGET = partes[1];
+            System.out.println(fileName);
+            System.out.println(camposGET);
+            
+            if(fileName.equals("./Teste3.html")){
+                partes2 = camposGET.split("\\=");
+                campo = partes2[0];
+                username = partes2[1];
+                System.out.println("Campo: "+campo); 
+                System.out.println("Nome: "+username);
+            }
+        }
 	
 	// Open the requested file.
         FileInputStream fis = null ;
