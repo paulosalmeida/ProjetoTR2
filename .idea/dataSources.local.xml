@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal">
+    <data-source name="PostgreSQL - tr2@127.0.0.1" uuid="b7d3b496-8db1-4219-8476-f65d730624df">
+      <secret-storage>master_key</secret-storage>
+      <user-name>postgres</user-name>
+      <schema-pattern>tr2.pg_catalog tr2.public</schema-pattern>
+      <default-schemas>tr2.pg_catalog tr2.public</default-schemas>
+    </data-source>
+  </component>
+</project>
