@@ -1,0 +1,61 @@
+-- Table: users
+
+-- DROP TABLE users;
+
+CREATE TABLE users
+(
+  id serial NOT NULL,
+  username character varying(100) NOT NULL,
+  password character varying(512) NOT NULL,
+  CONSTRAINT users_pkey PRIMARY KEY (id),
+  CONSTRAINT users_username_key UNIQUE (username)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE users
+  OWNER TO postgres;
+
+
+-- Table: ip_address
+
+-- DROP TABLE ip_address;
+
+CREATE TABLE ip_address
+(
+  id integer NOT NULL,
+  ip_address character varying(100) NOT NULL,
+  CONSTRAINT ip_address_pkey PRIMARY KEY (id),
+  CONSTRAINT ip_address_ip_address_key UNIQUE (ip_address)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE ip_address
+  OWNER TO postgres;
+
+
+-- Table: files
+
+-- DROP TABLE files;
+
+CREATE TABLE files
+(
+  file_name character varying(200) NOT NULL,
+  path character varying(200),
+  id serial NOT NULL,
+  ip_address character varying(100) NOT NULL,
+  username character varying(100) NOT NULL,
+  CONSTRAINT files_pkey PRIMARY KEY (id),
+  CONSTRAINT files_ip_address_fkey FOREIGN KEY (ip_address)
+      REFERENCES ip_address (ip_address) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT files_username_fkey FOREIGN KEY (username)
+      REFERENCES users (username) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE files
+  OWNER TO postgres;
