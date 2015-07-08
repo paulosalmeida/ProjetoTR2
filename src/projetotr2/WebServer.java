@@ -18,6 +18,7 @@ public class WebServer implements Runnable{
         try{
             runServer();
         }catch(Exception e){
+            System.out.println("Erro! WebServer");
             System.out.println(e);
         }
     }
@@ -37,19 +38,12 @@ public class WebServer implements Runnable{
 
                 // Construct an object to process the HTTP request message.
                 HttpRequest request = new HttpRequest(connection);
-                ServerUDP serv = new ServerUDP();
-                ClientUDP cli = new ClientUDP();
 
                 // Create a new thread to process the request.
                 Thread tweb = new Thread(request);
-                Thread tserv = new Thread(serv);
-                Thread tcli = new Thread(cli);
-                System.out.println("1");
 
                 // Start the thread.
                 tweb.start();
-                tserv.start();
-                tcli.start();
             }
         }catch(Exception e){
             System.out.println("Erro!");
