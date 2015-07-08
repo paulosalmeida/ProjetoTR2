@@ -121,7 +121,7 @@ public class FileDatabase {
     public ArrayList<FileEntity> retrieveAllFilesOfUser(String username) {
         Connection conn = null;
         PreparedStatement stmt = null;
-        FileEntity file = new FileEntity();
+        ArrayList<FileEntity> fileEntityArrayList = new ArrayList<>();
 
         try {
             //STEP 2: Register JDBC driver
@@ -140,10 +140,12 @@ public class FileDatabase {
             ResultSet rs = stmt.executeQuery();
 
             while(rs.next()) {
+                FileEntity file = new FileEntity();
                 file.setFile_name(rs.getString(1));
                 file.setPath(rs.getString(2));
                 file.setIp_address(rs.getString(3));
                 file.setUsername(rs.getString(4));
+                fileEntityArrayList.add(file);
             }
 
             rs.close();
@@ -169,7 +171,7 @@ public class FileDatabase {
                 se.printStackTrace();
             }
         }
-        return file;
+        return fileEntityArrayList;
     }
 
     public void delete(String fileName) {
