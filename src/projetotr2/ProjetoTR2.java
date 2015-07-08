@@ -7,6 +7,7 @@ package projetotr2;
 
 import java.net.ServerSocket;
 import java.net.Socket;
+import DataBase.*;
 
 public class ProjetoTR2 {
 
