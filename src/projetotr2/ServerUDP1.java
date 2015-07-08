@@ -13,7 +13,7 @@ import java.net.InetAddress;
  *
  * @author Paulo
  */
-public class ServerUDP implements Runnable{
+public class ServerUDP1 implements Runnable{
     @Override
     public void run(){
         try{
@@ -41,26 +41,32 @@ public class ServerUDP implements Runnable{
                 InetAddress IPAddress = receivePacket.getAddress();
 
                 int port = receivePacket.getPort();
-                /*---Parte a mudar
+                //---Parte a mudar
                 String capitalizedSentence = sentence.toUpperCase(); 
                 if(sentence.equals("BroadcastUDP")){
                     //Mensagem broadcast, perguntando sobre os nós ativos
                     String stringACK = new String("BroadcastACK");
                     sendData = stringACK.getBytes();
                 }
-                ///---Parte a mudar*/
+                ///---Parte a mudar
 
                 //sendData = capitalizedSentence.getBytes(); 
-                if(sentence.trim().equals("HelloUDP")){
-                    sendData = "HelloACK".getBytes();
-                }else{
-                    sendData = null;
-                }
 
-                DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, port);
- 
-                //System.out.println("Servidor 3");
+                DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, port); 
+
+                System.out.println("Servidor 3");
                 serverSocket.send(sendPacket); 
+                System.out.println("Servidor 4");
+
+                Thread.sleep(3000);
+                sendData = "UM".getBytes();
+                DatagramPacket sendPacket1 = new DatagramPacket(sendData, sendData.length, IPAddress, port);
+                serverSocket.send(sendPacket1); 
+
+                Thread.sleep(3000);
+                sendData = "DOIS".getBytes();
+                DatagramPacket sendPacket2 = new DatagramPacket(sendData, sendData.length, IPAddress, port);
+                serverSocket.send(sendPacket2);
 
                 for(i=0 ; i<receiveData.length ; i++){
                     receiveData[i] = 0;

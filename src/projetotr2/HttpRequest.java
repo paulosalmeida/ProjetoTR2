@@ -5,6 +5,7 @@
  */
 package projetotr2;
 
+import DataBase.*;
 import java.io.*;
 import java.net.*;
 import java.util.*;
@@ -48,7 +49,7 @@ final class HttpRequest implements Runnable {
         StringTokenizer tokens = new StringTokenizer(requestLine);
         tokens.nextToken();  // skip over the method, which should be "GET"
         String fileName = tokens.nextToken();
-        String camposGET, campo, username;
+        String camposGET, campo, username=null, password=null;
 	
         // Prepend a "." so that file request is within the current directory.
         fileName = "." + fileName ;
@@ -68,6 +69,17 @@ final class HttpRequest implements Runnable {
                 System.out.println("Campo: "+campo); 
                 System.out.println("Nome: "+username);
             }
+        }
+        
+        UserDataBase userDataBase = new UserDataBase();
+        UserEntity user = new UserEntity();
+        
+        user.setUsername(username);
+        user.setPassword(password);
+        
+        UserEntity DBuser = userDataBase.retrieve(user);
+        if(DBuser.getPassword().equals(user.getPassword())){
+            System.out.println("Login deu certo");
         }
 	
 	// Open the requested file.

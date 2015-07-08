@@ -20,6 +20,13 @@ public class ProjetoTR2 {
             WebServer web = new WebServer();
             ServerUDP serv = new ServerUDP();
             ClientUDP cli = new ClientUDP();
+            
+            /*UserEntity user = new UserEntity();
+            user.setPassword("senha");
+            user.setUsername("blah");
+            
+            UserDataBase udb = new UserDataBase();
+            udb.create(user);*/
 
             // Create a new thread to process the request.
             Thread tweb = new Thread(web);

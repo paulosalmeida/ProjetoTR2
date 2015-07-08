@@ -16,7 +16,7 @@ import java.util.ArrayList;
  *
  * @author Paulo
  */
-public class ClientUDP implements Runnable{
+public class ClientUDP2 implements Runnable{
     private ArrayList<String> listaIP = new ArrayList<>();
     
     @Override
@@ -38,7 +38,7 @@ public class ClientUDP implements Runnable{
         
         BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in)); 
 
-        while(true){
+        do{
             DatagramSocket clientSocket = new DatagramSocket();
             clientSocket.setSoTimeout(5000);
 
@@ -48,7 +48,7 @@ public class ClientUDP implements Runnable{
             byte[] receiveData = new byte[1024]; 
 
             sentence = inFromUser.readLine(); 
-            sendData = "HelloUDP".getBytes();
+            sendData = sentence.getBytes();
 
             DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, 8888); 
 
@@ -56,12 +56,12 @@ public class ClientUDP implements Runnable{
 
             DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
 
-            /*long t= System.currentTimeMillis();
-            long end = t+10000,*/
-            int i=0;
+            long t= System.currentTimeMillis();
+            long end = t+10000;
 
             do{
                 clientSocket.receive(receivePacket);
+                System.out.println("Cliente 3");
 
                 receivePacket.getAddress();
 
@@ -71,9 +71,9 @@ public class ClientUDP implements Runnable{
                 if(!listaIP.contains(receivePacket.getAddress().getHostAddress())){
                     listaIP.add(receivePacket.getAddress().getHostAddress());
                 }
-            }while(i<1);
+            }while(System.currentTimeMillis() < end);
             
-            //System.out.println("Saiu do loop");
+            System.out.println("Saiu do loop");
             /*
             clientSocket.receive(receivePacket);
             System.out.println("Cliente 4");
@@ -82,9 +82,8 @@ public class ClientUDP implements Runnable{
 
             String modifiedSentence = new String(receivePacket.getData()); 
 
-            System.out.println("FROM SERVER:" + modifiedSentence);*/
-            clientSocket.close();
-        }
+            System.out.println("FROM SERVER:" + modifiedSentence);*/clientSocket.close();
+            }while(true);
             
     }
         

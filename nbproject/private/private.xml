@@ -4,11 +4,10 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/Paulo/Documents/GitHub/ProjetoTR2/src/projetotr2/HttpRequest.java</file>
-            <file>file:/C:/Users/Paulo/Documents/GitHub/ProjetoTR2/src/projetotr2/TrabalhoTR2.java</file>
             <file>file:/C:/Users/Paulo/Documents/GitHub/ProjetoTR2/src/projetotr2/ClientUDP.java</file>
             <file>file:/C:/Users/Paulo/Documents/GitHub/ProjetoTR2/src/projetotr2/ServerUDP.java</file>
-            <file>file:/C:/Users/Paulo/Documents/GitHub/ProjetoTR2/src/projetotr2/HelloServlet.java</file>
             <file>file:/C:/Users/Paulo/Documents/GitHub/ProjetoTR2/src/projetotr2/ProjetoTR2.java</file>
+            <file>file:/C:/Users/Paulo/Documents/GitHub/ProjetoTR2/src/DataBase/FileDatabase.java</file>
             <file>file:/C:/Users/Paulo/Documents/GitHub/ProjetoTR2/src/projetotr2/WebServer.java</file>
         </group>
     </open-files>
