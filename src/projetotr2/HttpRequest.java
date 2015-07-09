@@ -73,9 +73,11 @@ final class HttpRequest implements Runnable {
                 String usernameCampo = partes[0];
                 String passwordCampo = partes[1];
                 partes2 = usernameCampo.split("\\=");
-                username = partes2[0];
+                username = partes2[1];
                 partes2 = passwordCampo.split("\\=");
-                password = partes2[0];
+                password = partes2[1];
+                System.out.println(username);
+                System.out.println(password);
             }
         }
         
@@ -126,6 +128,23 @@ final class HttpRequest implements Runnable {
 		contentType(fileName) + CRLF;
         }else if(fileName.equals("./home/estadoSistema")){
             //HTML pro estado do sistema
+            statusLine = "HTTP/1.0 200 OK" + CRLF;
+            contentTypeLine = "Content-Type: text/html" + CRLF;
+            entityBody = "<HTML>" + 
+                    "<HEAD><TITLE>Estado do Sistema</TITLE></HEAD>" +
+                    "<BODY><P>Lista de IPs conectados: </P>";
+            ClientUDP udp = new ClientUDP(false);
+            Thread t = new Thread(udp);
+            
+            t.start();
+            t.join();
+            
+            ArrayList<String> listaIP = udp.getListaIP();
+            for(String s : listaIP){
+                    entityBody = entityBody + "<P>" + s + "</P>";
+            }
+            
+            entityBody = entityBody + "</BODY></HTML>";
             
         }else {
 	    statusLine = "HTTP/1.0 404 Not Found" + CRLF;

@@ -57,6 +57,8 @@ public class ClientUDP implements Runnable{
         ArrayList<String> IPsRodada = new ArrayList<>();
         IPAddressDatabase ipdb = new IPAddressDatabase();
         
+        listaIP.removeAll(listaIP);
+        
         //BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));
 
         while(true){
@@ -107,5 +109,9 @@ public class ClientUDP implements Runnable{
             System.out.println("FROM SERVER:" + modifiedSentence);*/
             clientSocket.close();
         }
+    }
+    
+    public ArrayList<String> getListaIP(){
+        return listaIP;
     }
 }
