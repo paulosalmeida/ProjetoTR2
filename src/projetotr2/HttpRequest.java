@@ -67,7 +67,7 @@ final class HttpRequest implements Runnable {
             fileName = "./home/logintr2.html";
         }
             
-        if(fileName.equals("./tabb.html")){
+        if(fileName.equals("./home/tabb.html")){
             if(camposGET != null){
                 partes = camposGET.split("\\&");
                 String usernameCampo = partes[0];
@@ -124,7 +124,10 @@ final class HttpRequest implements Runnable {
 	    statusLine = "HTTP/1.0 200 OK" + CRLF;
 	    contentTypeLine = "Content-Type: " + 
 		contentType(fileName) + CRLF;
-        } else {
+        }else if(fileName.equals("./home/estadoSistema")){
+            //HTML pro estado do sistema
+            
+        }else {
 	    statusLine = "HTTP/1.0 404 Not Found" + CRLF;
 	    contentTypeLine = "Content-Type: text/html" + CRLF;
 	    entityBody = "<HTML>" + 
