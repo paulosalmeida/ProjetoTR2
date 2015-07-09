@@ -31,9 +31,10 @@ public class ServerUDP implements Runnable{
 
           byte[] receiveData = new byte[1024]; 
           byte[] sendData  = new byte[1024]; 
-          System.out.println("udp 1");
+          System.out.println("SERV 0");
 
             while(true){ 
+                System.out.println("SERV 1");
                 DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length); 
                 serverSocket.receive(receivePacket);
                 String sentence = new String(receivePacket.getData());
@@ -58,6 +59,7 @@ public class ServerUDP implements Runnable{
                 }
 
                 DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, port);
+                System.out.println("SERV 2");
  
                 //System.out.println("Servidor 3");
                 serverSocket.send(sendPacket); 

@@ -5,11 +5,13 @@
  */
 package projetotr2;
 
+import DataBase.IPAddressDatabase;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.net.Socket;
 import java.util.ArrayList;
 
 /**
@@ -18,25 +20,41 @@ import java.util.ArrayList;
  */
 public class ClientUDP implements Runnable{
     private ArrayList<String> listaIP = new ArrayList<>();
+    private boolean loop = true;
+    
+    //Construtor
+    public ClientUDP(boolean loop) throws Exception {
+	this.loop = loop;
+    }
     
     @Override
     public void run(){
-        try{
-            UDPrequest();
-        }catch(Exception e){
-            
-        }finally{
-            System.out.println("Lista de msgs:");
-            for(String s : listaIP){
-                System.out.println(s);
+        do{
+            try{
+                UDPrequest();
+            }catch(Exception e){
+
+            }finally{
+                System.out.println("Lista de msgs:");
+                for(String s : listaIP){
+                    System.out.println(s);
+                }
+                
+                try{
+                    Thread.sleep(10000);
+                }catch(Exception e){
+                    System.out.println(e);
+                }
             }
-        }
+        }while(loop);
     }
     
     private void UDPrequest() throws Exception{
-        String sentence;
+        String sentence, ip;
+        ArrayList<String> IPsRodada = new ArrayList<>();
+        IPAddressDatabase ipdb = new IPAddressDatabase();
         
-        BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in)); 
+        //BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));
 
         while(true){
             DatagramSocket clientSocket = new DatagramSocket();
@@ -47,7 +65,7 @@ public class ClientUDP implements Runnable{
             byte[] sendData = new byte[1024]; 
             byte[] receiveData = new byte[1024]; 
 
-            sentence = inFromUser.readLine(); 
+            //sentence = inFromUser.readLine(); 
             sendData = "HelloUDP".getBytes();
 
             DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, 8888); 
@@ -68,9 +86,10 @@ public class ClientUDP implements Runnable{
                 String modifiedSentence = new String(receivePacket.getData()); 
 
                 System.out.println("FROM SERVER:" + modifiedSentence);
-                if(!listaIP.contains(receivePacket.getAddress().getHostAddress())){
-                    listaIP.add(receivePacket.getAddress().getHostAddress());
-                }
+                ip = receivePacket.getAddress().getHostAddress();
+                IPsRodada.add(receivePacket.getAddress().getHostAddress());
+                listaIP.add(receivePacket.getAddress().getHostAddress());
+                ipdb.create(receivePacket.getAddress().getHostAddress());
             }while(i<1);
             
             //System.out.println("Saiu do loop");
@@ -85,10 +104,5 @@ public class ClientUDP implements Runnable{
             System.out.println("FROM SERVER:" + modifiedSentence);*/
             clientSocket.close();
         }
-            
-    }
-        
-    public ArrayList<String> getListaIP(){
-        return listaIP;
     }
 }

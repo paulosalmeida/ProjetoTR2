@@ -19,7 +19,6 @@ public class ProjetoTR2 {
         try{
             WebServer web = new WebServer();
             ServerUDP serv = new ServerUDP();
-            ClientUDP cli = new ClientUDP();
             
             /*UserEntity user = new UserEntity();
             user.setPassword("senha");
@@ -31,12 +30,10 @@ public class ProjetoTR2 {
             // Create a new thread to process the request.
             Thread tweb = new Thread(web);
             Thread tserv = new Thread(serv);
-            Thread tcli = new Thread(cli);
 
             // Start the thread.
             tweb.start();
             tserv.start();
-            tcli.start();
                 
         }catch(Exception e){
             System.out.println("Erro!");

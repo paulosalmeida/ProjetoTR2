@@ -49,7 +49,7 @@ final class HttpRequest implements Runnable {
         StringTokenizer tokens = new StringTokenizer(requestLine);
         tokens.nextToken();  // skip over the method, which should be "GET"
         String fileName = tokens.nextToken();
-        String camposGET, campo, username=null, password=null;
+        String camposGET=null, campo=null, username=null, password=null;
 	
         // Prepend a "." so that file request is within the current directory.
         fileName = "." + fileName ;
@@ -61,17 +61,28 @@ final class HttpRequest implements Runnable {
             camposGET = partes[1];
             System.out.println(fileName);
             System.out.println(camposGET);
+        }
             
-            if(fileName.equals("./Teste3.html")){
+        if(fileName.equals("./Teste3.html")){
+            System.out.println(" # Teste 3");
+            if(camposGET != null){
                 partes2 = camposGET.split("\\=");
                 campo = partes2[0];
                 username = partes2[1];
                 System.out.println("Campo: "+campo); 
-                System.out.println("Nome: "+username);
+                
             }
         }
         
-        UserDataBase userDataBase = new UserDataBase();
+        if(fileName.equals("./Teste2.html")){
+            ClientUDP cli = new ClientUDP(false);
+            Thread t = new Thread(cli);
+            fileName = "./Teste.html";
+            
+            t.start();
+        }
+        
+        /*UserDataBase userDataBase = new UserDataBase();
         UserEntity user = new UserEntity();
         
         user.setUsername(username);
@@ -80,12 +91,13 @@ final class HttpRequest implements Runnable {
         UserEntity DBuser = userDataBase.retrieve(user);
         if(DBuser.getPassword().equals(user.getPassword())){
             System.out.println("Login deu certo");
-        }
+        }*/
 	
 	// Open the requested file.
         FileInputStream fis = null ;
         boolean fileExists = true ;
         try {
+            System.out.println("Filename: " + fileName);
 	    fis = new FileInputStream(fileName);
         } catch (FileNotFoundException e) {
 	    fileExists = false ;
@@ -112,7 +124,8 @@ final class HttpRequest implements Runnable {
 	    contentTypeLine = "Content-Type: text/html" + CRLF;
 	    entityBody = "<HTML>" + 
 		"<HEAD><TITLE>Not Found</TITLE></HEAD>" +
-		"<BODY>404 - Not Found</BODY></HTML>";
+		"<BODY><P>Você tentou acessar: "+fileName+"</P>"+
+                "<P>404 - Not Found</P></BODY></HTML>";
         }
 	// Send the status line.
         os.writeBytes(statusLine);
@@ -125,9 +138,11 @@ final class HttpRequest implements Runnable {
 
         // Send the entity body.
         if (fileExists) {
+            System.out.println("# File exists");
 	    sendBytes(fis, os);
 	    fis.close();
         } else {
+            System.out.println("# File NOT exists");
 	    os.writeBytes(entityBody) ;
         }
 
@@ -155,6 +170,9 @@ final class HttpRequest implements Runnable {
 	}
 	if(fileName.endsWith(".ram") || fileName.endsWith(".ra")) {
 	    return "audio/x-pn-realaudio";
+	}
+        if(fileName.endsWith(".css")) {
+	    return "text/css";
 	}
 	return "application/octet-stream" ;
     }
