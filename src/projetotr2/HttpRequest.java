@@ -62,15 +62,20 @@ final class HttpRequest implements Runnable {
             System.out.println(fileName);
             System.out.println(camposGET);
         }
+        
+        if(fileName.equals("./")){
+            fileName = "./home/logintr2.html";
+        }
             
-        if(fileName.equals("./Teste3.html")){
-            System.out.println(" # Teste 3");
+        if(fileName.equals("./tabb.html")){
             if(camposGET != null){
-                partes2 = camposGET.split("\\=");
-                campo = partes2[0];
-                username = partes2[1];
-                System.out.println("Campo: "+campo); 
-                
+                partes = camposGET.split("\\&");
+                String usernameCampo = partes[0];
+                String passwordCampo = partes[1];
+                partes2 = usernameCampo.split("\\=");
+                username = partes2[0];
+                partes2 = passwordCampo.split("\\=");
+                password = partes2[0];
             }
         }
         

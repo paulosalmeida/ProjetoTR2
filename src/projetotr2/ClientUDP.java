@@ -22,9 +22,12 @@ public class ClientUDP implements Runnable{
     private ArrayList<String> listaIP = new ArrayList<>();
     private boolean loop = true;
     
-    //Construtor
+    //Construtores
     public ClientUDP(boolean loop) throws Exception {
 	this.loop = loop;
+    }
+    public ClientUDP() throws Exception {
+        this.loop = true;
     }
     
     @Override
